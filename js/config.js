@@ -68,7 +68,7 @@ padres: {
   fondo: {
 
     // Imagen de fondo (respaldo mientras carga el video)
-    habilitado: true,
+    habilitado: false,
     imagen: "/assets/images/fondovalen.jpeg",
     opacidad: 0.85,
     posicion: "center center",
@@ -132,7 +132,7 @@ cristal: {
   portada: {
     titulo: "Mis XV Años",
     subtitulo: "Una noche para recordar",
-    imagen: "assets/images/portvalen.jpeg"
+    imagen: "assets/images/15verde.png"
   },
 
   ubicacion: {
