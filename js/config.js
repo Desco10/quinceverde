@@ -38,11 +38,11 @@ hora: "7:00 PM",
 fechaEvento: "2026-11-15T19:00:00",
 
   whatsapp: {
-  numero: "573246030396"
+  numero: "573106724550"
 },
  
 padres: {
-  padre: "Jhon Prado",
+  padre: "John Prado",
   madre: "Diana Escobar"
 },
  
@@ -132,20 +132,20 @@ cristal: {
   portada: {
     titulo: "Mis XV Años",
     subtitulo: "Una noche para recordar",
-    imagen: "assets/images/15verde.png"
+    imagen: "assets/images/valeprincipal.jpeg"
   },
 
   ubicacion: {
-    nombre: "Salón Milan",
+    nombre: "Salón Panorama",
     direccion: "Dirección del evento",
-    maps: "https://maps.app.goo.gl/ACu3f6iXzyMPC1CN8"
+    maps: "https://maps.app.goo.gl/DH9SW5scVVow4JLB7"
   },
 
   vestimenta: "Formal",
 
   regalo: {
     titulo: "Tu presencia es mi mejor regalo",
-    descripcion: "Si deseas obsequiarme algo, será recibido con mucho cariño."
+    descripcion: ""
   },
 
   musica: {
