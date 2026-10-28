@@ -401,6 +401,78 @@ h2 {
 
 
 /* ==========================================
+   RECUERDOS: VIDEO (alterna con el carrusel)
+   Se activa desde config.js → recuerdos.video
+========================================== */
+
+/* El atributo [hidden] siempre debe ocultar */
+.memory-video[hidden], .carousel[hidden], .memory-video [hidden] { display: none !important; }
+
+.memory-video { position: relative; margin: 0 auto; padding-bottom: 8px; }
+.memory-video[data-formato="vertical"]   { width: min(100%, 380px, calc(80vh * 9 / 16)); }
+.memory-video[data-formato="horizontal"] { width: min(100%, 820px); }
+.memory-video[data-formato="cuadrado"]   { width: min(100%, 560px, 80vh); }
+
+.memory-video-frame {
+  position: relative; overflow: hidden; border: 1px solid var(--hair); border-radius: 22px; background: #020a05;
+  outline: 1px solid rgba(210, 172, 85, 0.35); outline-offset: 6px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 40px rgba(210, 172, 85, 0.14);
+}
+.memory-video[data-formato="vertical"]   .memory-video-frame { aspect-ratio: 9 / 16; }
+.memory-video[data-formato="horizontal"] .memory-video-frame { aspect-ratio: 16 / 9; }
+.memory-video[data-formato="cuadrado"]   .memory-video-frame { aspect-ratio: 1 / 1; }
+
+.memory-video video { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+
+/* Degradado inferior para que los controles se vean sobre cualquier video */
+.memory-video-frame::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 34%; z-index: 1; pointer-events: none; background: linear-gradient(transparent, rgba(2, 10, 5, 0.6)); }
+
+/* Botón central de reproducir */
+.memory-video-play {
+  position: absolute; top: 50%; left: 50%; z-index: 3; width: 74px; height: 74px; display: flex; align-items: center; justify-content: center; transform: translate(-50%, -50%);
+  border: 1px solid var(--gold); border-radius: 50%; background: rgba(4, 22, 12, 0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 7px rgba(210, 172, 85, 0.14), 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.4s ease, transform 0.3s ease, background 0.3s ease;
+}
+.memory-video-play::before { content: ""; margin-left: 5px; border-style: solid; border-width: 11px 0 11px 18px; border-color: transparent transparent transparent var(--gold-soft); }
+.memory-video-play:hover { background: rgba(210, 172, 85, 0.85); transform: translate(-50%, -50%) scale(1.08); }
+.memory-video-play:hover::before { border-left-color: var(--ink); }
+.memory-video-play:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 4px; }
+
+/* Mientras se reproduce, el botón central se oculta (tocar el video lo pausa) */
+.memory-video.reproduciendo .memory-video-play { opacity: 0; pointer-events: none; }
+.memory-video.reproduciendo .memory-video-play:focus-visible { opacity: 1; }
+
+/* Botón de sonido */
+.memory-video-sound {
+  position: absolute; right: 14px; bottom: 18px; z-index: 3; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--gold); border-radius: 50%; background: rgba(4, 22, 12, 0.62); color: var(--gold-soft);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.memory-video-sound svg { width: 22px; height: 22px; }
+.memory-video-sound:hover { background: var(--gold); color: var(--ink); transform: scale(1.08); }
+.memory-video-sound:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 3px; }
+
+/* Ícono según el estado: sin sonido (por defecto) o con sonido */
+.memory-video-sound .icono-on { display: none; }
+.memory-video[data-sonido="on"] .memory-video-sound .icono-on { display: block; }
+.memory-video[data-sonido="on"] .memory-video-sound .icono-off { display: none; }
+
+/* Barra de progreso dorada */
+.memory-video-progress { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; height: 3px; background: rgba(255, 255, 255, 0.18); pointer-events: none; }
+.memory-video-progress span { display: block; height: 100%; background: var(--gold-foil); transform: scaleX(0); transform-origin: left; }
+
+.memory-video figcaption { margin-top: 22px; color: #f6efd6; font-family: var(--font-title); font-size: 1.25rem; font-style: italic; line-height: 1.6; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6); }
+
+@media (max-width: 700px) {
+  .memory-video-frame { border-radius: 16px; outline-offset: 4px; }
+  .memory-video-play { width: 64px; height: 64px; }
+  .memory-video-sound { right: 10px; bottom: 14px; width: 40px; height: 40px; }
+}
+
+
+/* ==========================================
    PADRES: MARCO DE ESQUINAS
 ========================================== */
 

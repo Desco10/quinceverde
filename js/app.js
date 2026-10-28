@@ -901,7 +901,8 @@ if (EVENTO.cristal) {
       document.fonts.load('italic 400 1em "Cormorant Garamond"'),
       document.fonts.load('italic 600 1em "Cormorant Garamond"'),
       document.fonts.load('400 1em "Jost"'),
-      document.fonts.load('600 1em "Jost"')
+      document.fonts.load('600 1em "Jost"'),
+      document.fonts.load('400 1em "Pinyon Script"')
     ]).catch(() => {});
 
   }
@@ -1427,6 +1428,396 @@ function cargarDressCode() {
 
 
 cargarDressCode();
+
+
+
+// ------------------------------------------
+// RECUERDOS: VIDEO O CARRUSEL
+//
+// Se controla desde config.js:
+//   EVENTO.recuerdos.video.habilitado: true / false
+//
+// true  → se muestra el video en esta sección
+// false → se muestra el carrusel de imágenes
+//         (el carrusel siempre se conserva en el HTML)
+// ------------------------------------------
+
+function configurarVideoRecuerdos() {
+
+  const cfg =
+    EVENTO.recuerdos && EVENTO.recuerdos.video;
+
+  const contenedor =
+    document.getElementById("recuerdosVideo");
+
+  const carrusel =
+    document.getElementById("recuerdosCarrusel");
+
+  if (!contenedor || !carrusel) return;
+
+
+  // Interruptor: false (o sin configurar) → solo el carrusel
+  if (!cfg || cfg.habilitado !== true || !cfg.archivo) {
+
+    contenedor.hidden = true;
+    carrusel.hidden = false;
+
+    return;
+  }
+
+
+  const video = document.getElementById("recuerdosVideoEl");
+  const btnPlay = document.getElementById("recuerdosPlay");
+  const btnSonido = document.getElementById("recuerdosSonido");
+  const progreso = document.getElementById("recuerdosProgreso");
+  const leyenda = document.getElementById("recuerdosLeyenda");
+
+  if (!video || !btnPlay) return;
+
+
+  // Se muestra el video y se oculta el carrusel
+  contenedor.hidden = false;
+  carrusel.hidden = true;
+
+  contenedor.dataset.formato =
+    ["vertical", "horizontal", "cuadrado"].includes(cfg.formato)
+      ? cfg.formato
+      : "vertical";
+
+  if (leyenda) {
+
+    const texto = String(cfg.leyenda || "").trim();
+
+    leyenda.textContent = texto;
+    leyenda.hidden = texto === "";
+
+  }
+
+  if (btnSonido) {
+    btnSonido.hidden = cfg.sonido === false;
+  }
+
+
+  // ---- Preferencias del usuario
+
+  const movimientoReducido =
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const ahorroDeDatos =
+    !!(navigator.connection && navigator.connection.saveData === true);
+
+  const sinAutoplay =
+    cfg.autoplay === false ||
+    movimientoReducido ||
+    (cfg.respetarAhorroDatos !== false && ahorroDeDatos);
+
+
+  // ---- Configuración del <video>
+
+  video.muted = true;
+  video.defaultMuted = true;
+  video.loop = cfg.bucle !== false;
+  video.playsInline = true;
+  video.preload = "none";
+  video.disablePictureInPicture = true;
+
+  video.setAttribute("muted", "");
+  video.setAttribute("playsinline", "");
+  video.setAttribute("webkit-playsinline", "");
+
+  if (cfg.poster) {
+    video.poster = cfg.poster;
+  }
+
+
+  // ---- Carga diferida: el video solo se descarga cuando
+  //      la sección está cerca de verse (o al tocar play)
+
+  const fuentes = [];
+
+  if (cfg.archivoWebm) {
+    fuentes.push({ src: cfg.archivoWebm, tipo: "video/webm" });
+  }
+
+  fuentes.push({ src: cfg.archivo, tipo: "video/mp4" });
+
+  let cargado = false;
+  let fallos = 0;
+
+  function volverAlCarrusel() {
+
+    console.warn(
+      "No se pudo cargar el video de recuerdos:",
+      cfg.archivo
+    );
+
+    liberarMusica();
+
+    video.pause();
+
+    contenedor.hidden = true;
+    carrusel.hidden = false;
+
+  }
+
+  function cargar() {
+
+    if (cargado) return;
+
+    cargado = true;
+
+    fuentes.forEach((f) => {
+
+      const source = document.createElement("source");
+
+      source.src = f.src;
+      source.type = f.tipo;
+
+      source.addEventListener("error", () => {
+
+        fallos++;
+
+        if (fallos >= fuentes.length) {
+          volverAlCarrusel();
+        }
+
+      });
+
+      video.appendChild(source);
+
+    });
+
+    video.preload = "metadata";
+
+    video.load();
+
+  }
+
+
+  // ---- Música de fondo: se pausa mientras el video tiene
+  //      sonido y se reanuda después (usa el mismo botón
+  //      de música que ya existe, sin tocar su lógica)
+
+  let musicaPausadaPorVideo = false;
+
+  function tomarMusica() {
+
+    if (musica && !musica.paused) {
+
+      musicaPausadaPorVideo = true;
+
+      musicControl.click();
+
+    }
+
+  }
+
+  function liberarMusica() {
+
+    if (!musicaPausadaPorVideo) return;
+
+    musicaPausadaPorVideo = false;
+
+    if (musica && musica.paused) {
+      musicControl.click();
+    }
+
+  }
+
+
+  // ---- Reproducir / pausar
+
+  let pausadoPorUsuario = false;
+
+  function actualizarEstado() {
+
+    const reproduciendo = !video.paused && !video.ended;
+
+    contenedor.classList.toggle("reproduciendo", reproduciendo);
+
+    btnPlay.setAttribute(
+      "aria-label",
+      reproduciendo ? "Pausar video" : "Reproducir video"
+    );
+
+  }
+
+  function actualizarSonido() {
+
+    const conSonido = !video.muted;
+
+    contenedor.dataset.sonido = conSonido ? "on" : "off";
+
+    if (btnSonido) {
+
+      btnSonido.setAttribute("aria-pressed", String(conSonido));
+
+      btnSonido.setAttribute(
+        "aria-label",
+        conSonido ? "Silenciar video" : "Activar sonido del video"
+      );
+
+    }
+
+  }
+
+  function reproducir() {
+
+    cargar();
+
+    const promesa = video.play();
+
+    if (promesa && typeof promesa.catch === "function") {
+      promesa.catch(actualizarEstado);
+    }
+
+  }
+
+  function alternar() {
+
+    if (video.paused || video.ended) {
+
+      pausadoPorUsuario = false;
+
+      reproducir();
+
+    } else {
+
+      pausadoPorUsuario = true;
+
+      video.pause();
+
+    }
+
+  }
+
+  btnPlay.addEventListener("click", alternar);
+  video.addEventListener("click", alternar);
+
+  video.addEventListener("play", actualizarEstado);
+  video.addEventListener("playing", actualizarEstado);
+
+  video.addEventListener("pause", () => {
+
+    actualizarEstado();
+
+    liberarMusica();
+
+  });
+
+  video.addEventListener("ended", () => {
+
+    actualizarEstado();
+
+    liberarMusica();
+
+  });
+
+  if (btnSonido) {
+
+    btnSonido.addEventListener("click", () => {
+
+      cargar();
+
+      video.muted = !video.muted;
+
+      actualizarSonido();
+
+      if (!video.muted) {
+
+        tomarMusica();
+
+        if (video.paused) {
+
+          pausadoPorUsuario = false;
+
+          reproducir();
+
+        }
+
+      } else {
+
+        liberarMusica();
+
+      }
+
+    });
+
+  }
+
+  if (progreso) {
+
+    video.addEventListener("timeupdate", () => {
+
+      if (video.duration > 0) {
+
+        progreso.style.transform =
+          `scaleX(${Math.min(1, video.currentTime / video.duration)})`;
+
+      }
+
+    });
+
+  }
+
+  actualizarEstado();
+  actualizarSonido();
+
+
+  // ---- Observadores: cargar cerca de la pantalla,
+  //      reproducir al verse y pausar al salir
+
+  if ("IntersectionObserver" in window) {
+
+    new IntersectionObserver(
+      (entradas, observador) => {
+
+        if (entradas.some((e) => e.isIntersecting)) {
+
+          cargar();
+
+          observador.disconnect();
+
+        }
+
+      },
+      { rootMargin: "400px 0px" }
+    ).observe(contenedor);
+
+    new IntersectionObserver(
+      (entradas) => {
+
+        entradas.forEach((e) => {
+
+          if (e.isIntersecting) {
+
+            if (!sinAutoplay && !pausadoPorUsuario) {
+              reproducir();
+            }
+
+          } else if (!video.paused) {
+
+            video.pause();
+
+          }
+
+        });
+
+      },
+      { threshold: 0.5 }
+    ).observe(contenedor);
+
+  } else {
+
+    cargar();
+
+  }
+
+}
+
+
+configurarVideoRecuerdos();
+
 
 
 

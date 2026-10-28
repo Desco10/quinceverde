@@ -97,7 +97,29 @@ padres: {
     }
 
   },
+ 
 
+  // ==========================================================
+// AGREGAR A config.js  ·  RECUERDOS: video o carrusel
+// Pégalo dentro de EVENTO (por ejemplo, debajo de "fondo").
+// ==========================================================
+
+  recuerdos: {
+
+    video: {
+      habilitado: true,                          // true = VIDEO | false = imágenes del carrusel
+      archivo: "assets/video/carrucelvale.mp4",     // tu video (MP4)
+      archivoWebm: "",                           // opcional (más liviano)
+      poster: "assets/images/recuerdos-poster.jpg", // imagen que se ve antes de reproducir
+      leyenda: "",                               // texto opcional debajo del video ("" = sin texto)
+      formato: "vertical",                       // "vertical" (9:16) | "horizontal" (16:9) | "cuadrado"
+      autoplay: true,                            // se reproduce solo, sin sonido, al verse
+      bucle: true,                               // repetir al terminar
+      sonido: true,                              // true = muestra el botón de sonido
+      respetarAhorroDatos: true                  // sin autoplay si el usuario ahorra datos
+    }
+
+  },
 
   // ---- 3) EFECTOS (luciérnagas y mariposas) ----
 

@@ -763,8 +763,14 @@
     </section>
 
 
-    <!-- RECUERDOS DE INFANCIA -->
-    <section class="gallery-section childhood section fx-slide-right">
+    <!-- ==========================================
+     RECUERDOS: VIDEO O CARRUSEL
+     Se elige desde config.js → recuerdos.video.habilitado
+       true  → se muestra el video
+       false → se muestra el carrusel de imágenes
+     (el carrusel siempre se conserva aquí)
+========================================== -->
+    <section class="gallery-section childhood section fx-slide-right" id="seccionRecuerdos">
 
       <p class="section-eyebrow">
         Mis recuerdos
@@ -774,7 +780,63 @@
         Un poquito de mi historia
       </h2>
 
-      <div class="carousel" data-carousel>
+
+      <!-- VIDEO (app.js lo muestra solo si el interruptor está en true) -->
+      <figure class="memory-video" id="recuerdosVideo" data-formato="vertical" data-sonido="off" hidden>
+
+        <div class="memory-video-frame">
+
+          <video
+            id="recuerdosVideoEl"
+            muted
+            playsinline
+            preload="none"
+            aria-label="Video de recuerdos"
+          ></video>
+
+          <button
+            type="button"
+            class="memory-video-play"
+            id="recuerdosPlay"
+            aria-label="Reproducir video"
+          ></button>
+
+          <button
+            type="button"
+            class="memory-video-sound"
+            id="recuerdosSonido"
+            aria-label="Activar sonido del video"
+            aria-pressed="false"
+          >
+
+            <!-- Sin sonido -->
+            <svg class="icono-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M11 5L6 9H3v6h3l5 4V5z"/>
+              <path d="M16 9.5l5 5M21 9.5l-5 5"/>
+            </svg>
+
+            <!-- Con sonido -->
+            <svg class="icono-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M11 5L6 9H3v6h3l5 4V5z"/>
+              <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+              <path d="M18.5 5.5a9 9 0 0 1 0 13"/>
+            </svg>
+
+          </button>
+
+          <div class="memory-video-progress" aria-hidden="true">
+            <span id="recuerdosProgreso"></span>
+          </div>
+
+        </div>
+
+        <figcaption id="recuerdosLeyenda" hidden></figcaption>
+
+      </figure>
+
+
+      <!-- CARRUSEL DE IMÁGENES (se muestra si el video está en false) -->
+      <div class="carousel" data-carousel id="recuerdosCarrusel">
 
   <div class="carousel-viewport">
 
@@ -840,7 +902,6 @@
 </div>
 
     </section>
-
 
     <!-- MENSAJE PADRES -->
     <!-- PADRES -->
