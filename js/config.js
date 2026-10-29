@@ -192,95 +192,17 @@ itinerarioHabilitado: true,
 
 itinerario: [
   {
-    hora: "",
+    hora: "7:00 PM",
     titulo: "Ingreso y bienvenida",
     descripcion: "Recepción y bienvenida a los invitados."
   },
+  
   {
-    hora: "",
-    titulo: "Photo Booth",
-    descripcion: "Sesión de fotos y recuerdos con los invitados."
-  },
-  {
-    hora: "",
-    titulo: "Apertura",
-    descripcion: "Inicio de la celebración."
-  },
-  {
-    hora: "",
-    titulo: "Proyección de video",
-    descripcion: "Proyección de un video especial."
-  },
-  {
-    hora: "",
-    titulo: "Iniciación oficial",
-    descripcion: "Inicio oficial del protocolo de los XV años."
-  },
-  {
-    hora: "",
-    titulo: "Ingreso de la corte de honor",
-    descripcion: "Entrada de la corte de honor."
-  },
-  {
-    hora: "",
-    titulo: "Entrada de la quinceañera",
-    descripcion: "Entrada especial de la quinceañera."
-  },
-  {
-    hora: "",
-    titulo: "Presentación",
-    descripcion: "Presentación de la quinceañera ante sus invitados."
-  },
-  {
-    hora: "",
-    titulo: "Entrega de la muñeca",
-    descripcion: "Momento especial de entrega de la muñeca."
-  },
-  {
-    hora: "",
-    titulo: "Protocolo tradicional",
-    descripcion: "Ceremonia y momentos tradicionales de los XV años."
-  },
-  {
-    hora: "",
+    hora: "8.30 PM",
     titulo: "Vals principal",
     descripcion: "Vals principal de la quinceañera."
-  },
-  {
-    hora: "",
-    titulo: "Vals con familiares",
-    descripcion: "Vals especial junto a familiares."
-  },
-  {
-    hora: "",
-    titulo: "Brindis y palabras de agradecimiento",
-    descripcion: "Brindis y palabras especiales para los invitados."
-  },
-  {
-    hora: "",
-    titulo: "Canto de cumpleaños",
-    descripcion: "Celebración y canto de cumpleaños."
-  },
-  {
-    hora: "",
-    titulo: "Sesión de fotos y recuerdos",
-    descripcion: "Sesión de fotos para conservar momentos especiales."
-  },
-  {
-    hora: "",
-    titulo: "Cena",
-    descripcion: "Momento para compartir y disfrutar de la cena."
-  },
-  {
-    hora: "",
-    titulo: "Baile sorpresa y apertura de pista",
-    descripcion: "Baile sorpresa y apertura de la pista de baile."
-  },
-  {
-    hora: "",
-    titulo: "Finalización del evento",
-    descripcion: "Cierre de esta celebración tan especial."
   }
+  
 ],
 
 
