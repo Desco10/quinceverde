@@ -40,6 +40,135 @@ document.addEventListener("DOMContentLoaded", () => {
   const rsvpMensaje = document.getElementById("rsvpMensaje");
 
 
+  // ------------------------------------------
+  // FECHA LÍMITE DE CONFIRMACIÓN
+  // Configuración controlada desde config.js
+  // ------------------------------------------
+
+  function configurarFechaLimiteRSVP() {
+
+    const config = EVENTO.confirmacion;
+
+    const seccion = document.getElementById("seccionFechaLimite");
+
+    if (!seccion) return;
+
+    // Si la función está desactivada, ocultar la tarjeta.
+    if (!config || config.habilitada !== true) {
+      seccion.hidden = true;
+      return;
+    }
+
+    const titulo = document.getElementById("rsvpDeadlineTitle");
+    const mensaje = document.getElementById("rsvpDeadlineMessage");
+    const fecha = document.getElementById("rsvpDeadlineDate");
+    const fechaTexto = document.getElementById("rsvpDeadlineDateValue");
+    const pie = document.getElementById("rsvpDeadlineFooter");
+
+    if (!titulo || !mensaje || !fecha || !fechaTexto || !pie) {
+      return;
+    }
+
+    // Validar formato AAAA-MM-DD.
+    const coincidencia = /^(\d{4})-(\d{2})-(\d{2})$/.exec(
+      config.fechaLimite || ""
+    );
+
+    if (!coincidencia) {
+      console.error(
+        "Fecha límite RSVP: utiliza el formato AAAA-MM-DD."
+      );
+
+      seccion.hidden = true;
+      return;
+    }
+
+    const anio = Number(coincidencia[1]);
+    const mes = Number(coincidencia[2]);
+    const dia = Number(coincidencia[3]);
+
+    const limite = new Date(anio, mes - 1, dia);
+
+    // Comprobar que la fecha exista realmente.
+    if (
+      limite.getFullYear() !== anio ||
+      limite.getMonth() !== mes - 1 ||
+      limite.getDate() !== dia
+    ) {
+      console.error("Fecha límite RSVP: la fecha no es válida.");
+
+      seccion.hidden = true;
+      return;
+    }
+
+    const hoy = new Date();
+
+    const inicioHoy = new Date(
+      hoy.getFullYear(),
+      hoy.getMonth(),
+      hoy.getDate()
+    );
+
+    const fechaFormateada = limite.toLocaleDateString("es-CO", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+
+    titulo.textContent =
+      config.titulo || "Tu presencia es muy especial";
+
+    mensaje.textContent =
+      config.mensaje ||
+      "Por favor, confirma tu asistencia antes de la fecha límite.";
+
+    fechaTexto.textContent = fechaFormateada;
+
+    pie.textContent =
+      "Gracias por ayudarnos a preparar cada detalle de esta noche.";
+
+    fecha.hidden = config.mostrarFechaLimite === false;
+
+    // Cuando ya pasó la fecha límite.
+    if (inicioHoy.getTime() > limite.getTime()) {
+
+      titulo.textContent = "Plazo de confirmación finalizado";
+
+      mensaje.textContent =
+        config.mensajePlazoCumplido ||
+        "El plazo de confirmación ha finalizado.";
+
+      fecha.hidden = true;
+
+      pie.textContent =
+        "Si necesitas actualizar tu respuesta, comunícate con nosotros.";
+
+    } else if (inicioHoy.getTime() === limite.getTime()) {
+
+      // Mensaje especial para el último día.
+      titulo.textContent = "¡Hoy es el último día!";
+
+      mensaje.textContent =
+        "Por favor, confirma tu asistencia hoy. ¡Nos encantará contar contigo!";
+
+    }
+
+    // Mostrar la tarjeta una vez que esté preparada.
+    seccion.hidden = false;
+
+    if (config.mostrarAnimacion !== false) {
+      requestAnimationFrame(() => {
+        seccion.classList.add("is-visible");
+      });
+    }
+
+  }
+
+  configurarFechaLimiteRSVP();
+
+
+
+
   const nombrePadre =
   document.getElementById("nombrePadre");
 

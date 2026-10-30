@@ -41,6 +41,29 @@ fechaEvento: "2026-11-15T19:00:00",
   numero: "573106724550"
 },
  
+  // ==========================================
+  // CONFIRMACIÓN DE ASISTENCIA
+  // ==========================================
+  confirmacion: {
+    habilitada: true,
+
+    // Último día para confirmar la asistencia
+    // Formato: AAAA-MM-DD
+    fechaLimite: "2026-11-08",
+
+    titulo: "Tu presencia es muy especial",
+
+    mensaje: "Estamos preparando una noche inolvidable. Por favor, confirma tu asistencia antes de la fecha límite.",
+
+    mensajePlazoCumplido: "El plazo de confirmación ha finalizado. Si necesitas actualizar tu respuesta, comunícate con nosotros.",
+
+    mostrarFechaLimite: true,
+    mostrarAnimacion: true
+  },
+
+
+
+
 padres: {
   padre: "John Prado",
   madre: "Diana Escobar"
