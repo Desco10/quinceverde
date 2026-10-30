@@ -92,7 +92,7 @@ padres: {
 
     // Imagen de fondo (respaldo mientras carga el video)
     habilitado: false,
-    imagen: "/assets/images/fondovalen.jpeg",
+    imagen: "/assets/images/carrucel1.jpg",
     opacidad: 0.85,
     posicion: "center center",
     tamaño: "cover",
