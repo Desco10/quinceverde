@@ -49,7 +49,7 @@ fechaEvento: "2026-11-15T19:00:00",
 
     // Último día para confirmar la asistencia
     // Formato: AAAA-MM-DD
-    fechaLimite: "2026-11-08",
+    fechaLimite: "2026-11-10",
 
     titulo: "Tu presencia es muy especial",
 
