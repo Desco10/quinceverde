@@ -866,3 +866,42 @@
     transform: none;
   }
 }
+
+
+/* ==================================================
+   CORRECCIÓN DE SCROLL EN PC
+   La apertura puede crecer si la tarjeta ocupa
+   más espacio que la altura visible.
+================================================== */
+
+@media (min-width: 701px) {
+  #intro {
+    box-sizing: border-box;
+    height: auto;
+    min-height: 100vh;
+    max-height: none;
+    overflow: visible;
+  }
+
+  #intro .intro-content {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    height: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    overflow: visible;
+  }
+
+  #intro .guest-personalization {
+    flex-shrink: 0;
+    margin-bottom: 30px;
+  }
+}
+
+/* Evitar que el documento recorte contenido vertical */
+html,
+body {
+  min-height: 100%;
+}
