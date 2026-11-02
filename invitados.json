@@ -91,8 +91,8 @@
     "textoAdicional": "y familia"
   },
   {
-    "id": "alejando",
-    "nombre": "Alejando",
+    "id": "alejandro",
+    "nombre": "Alejandro",
     "apellido": "",
     "acompanantes": 1,
     "textoAdicional": "y señora"
@@ -569,7 +569,7 @@
   {
     "id": "diego",
     "nombre": "Diego",
-    "apellido": "",
+    "apellido": "Velazco",
     "acompanantes": 1,
     "textoAdicional": "y señora"
   },
@@ -733,5 +733,17 @@
     "apellido": "Jaramillo",
     "acompanantes": 0,
     "textoAdicional": ""
+  },
+
+  {
+    "id": "javier-andres",
+    "nombre": "Javier Andres",
+    "apellido": "Quintero",
+    "acompanantes": 2,
+    "textoAdicional": " y  señora e hijo"
   }
+
 ]
+
+
+
