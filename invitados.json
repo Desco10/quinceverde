@@ -741,7 +741,33 @@
     "apellido": "Quintero",
     "acompanantes": 2,
     "textoAdicional": " y  señora e hijo"
-  }
+  },
+
+
+
+   {
+    "id": "benjamin-manzano",
+    "nombre": "Benjamin ",
+    "apellido": "Manzano",
+    "acompanantes": 1,
+    "textoAdicional": " y  señora "
+  },
+
+    {
+      "id": "victor-granados",
+      "nombre": "Victor",
+      "apellido": "Granados",
+      "acompanantes": 1,
+      "textoAdicional": " y  señora "
+    },
+    
+    {
+      "id": "viviana-granados",
+      "nombre": "Viviana",
+      "apellido": "Granados",
+      "acompanantes": 1,
+      "textoAdicional": " y Esposo "
+    }
 
 ]
 
